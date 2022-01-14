@@ -12,6 +12,11 @@ export const storageReducer = (state, action) => {
         ...state,
         isLoggedIn: true,
       };
+    case "SET_LOGGED_OUT":
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }
