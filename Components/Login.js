@@ -8,11 +8,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { state, dispatch } = useAppContext();
 
-  function bypassLogin() {
-    //for testing purposes only.remove when dev is over
-    dispatch({ type: "SET_LOGGED_IN" }); //set logged in to true
-    router.push("/Catalog");
-  }
   async function authenticate() {
     // const users = await fetch("/api/getUsers").then((res) => res.json());
 
@@ -71,7 +66,6 @@ export default function Login() {
             >
               Login
             </button>
-            <button onClick={() => bypassLogin()}>Bypass Login</button>
           </div>
         </div>
       </div>
