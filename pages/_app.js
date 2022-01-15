@@ -1,13 +1,7 @@
-import "../styles/globals.css";
-import { AppWrapper } from "../State/AppContext";
+import '../styles/globals.css'
+
 function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <AppWrapper>
-        <Component {...pageProps} />
-      </AppWrapper>
-    </>
-  );
+  return <Component {...pageProps} />
 }
 
-export default MyApp;
+export default MyApp
