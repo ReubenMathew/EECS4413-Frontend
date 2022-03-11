@@ -11,7 +11,7 @@ export default function Catalog() {
   const router = useRouter();
   function handleItemClick(item) {
     router.push(
-      `/ProductDetails?id=${item.id}&productName=${item.productName}`
+      `/productDetails?id=${item.id}&productName=${item.productName}`
     );
   }
   function getData() {

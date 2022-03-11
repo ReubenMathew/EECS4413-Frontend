@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <div className="flex space-x-2">
       <Button onClick={() => router.push("/catalog")}>Catalog</Button>
-      <Button onClick={() => router.push("/ShoppingCart")}>Cart</Button>
+      <Button onClick={() => router.push("/shoppingCart")}>Cart</Button>
     </div>
   );
 }
