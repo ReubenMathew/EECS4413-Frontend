@@ -43,7 +43,10 @@ export default function ProductDetails({ data }) {
             <Row wrap="wrap" justify="space-between">
               <Button
                 onClick={() =>
-                  dispatch({ type: "ADD_TO_CART", data: productDetails })
+                  dispatch({
+                    type: "ADD_TO_CART",
+                    data: { item: productDetails, orderQuant: 0 },
+                  })
                 }
               >
                 Add to cart
