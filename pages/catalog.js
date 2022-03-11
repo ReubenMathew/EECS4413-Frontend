@@ -81,7 +81,7 @@ export default function Catalog() {
           ))
         )}
       </div>
-      <button onClick={() => router.push("/Checkout")}>checkout</button>
+      <button onClick={() => router.push("/checkout")}>checkout</button>
     </div>
   );
 }

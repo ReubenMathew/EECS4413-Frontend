@@ -6,7 +6,7 @@ export default function LandingPage() {
   return (
     <div>
       <p>This is the landing page!</p>
-      <button onClick={() => router.push("/Catalog")}>Enter Shop Cart</button>
+      <button onClick={() => router.push("/catalog")}>Enter Shop Cart</button>
     </div>
   );
 }
