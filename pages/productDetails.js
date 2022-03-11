@@ -45,7 +45,8 @@ export default function ProductDetails({ data }) {
                 onClick={() =>
                   dispatch({
                     type: "ADD_TO_CART",
-                    data: { item: productDetails, orderQuant: 0 },
+                    //default one the selected item is added to the cart
+                    data: { item: productDetails, orderQuant: 1 },
                   })
                 }
               >

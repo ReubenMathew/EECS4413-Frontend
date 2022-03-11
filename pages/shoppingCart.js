@@ -33,6 +33,34 @@ export default function ShoppingCart() {
     dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
   }
 
+  function displayTotal() {
+    if (state.cart.length == 0) {
+      return <p>Add some Items!</p>;
+    } else {
+      var Subtotal = 0;
+
+      state.cart.map((product, index) => {
+        Subtotal = Subtotal + product.item.price * product.orderQuant;
+      });
+      var hst = Subtotal * 0.15;
+      return (
+        <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
+          <Card.Body css={{ p: 0 }}>
+            <Row wrap="wrap" justify="space-between">
+              <Text b>Subtotal: ${Subtotal}</Text>
+              <Text b>HST: ${hst}</Text>
+              <Row b>Shipping $4.99</Row>
+              <Row>
+                {" "}
+                <Text b>Total: ${Subtotal + hst + 4.99}</Text>
+              </Row>
+            </Row>
+          </Card.Body>
+        </Card>
+      );
+    }
+  }
+
   useEffect(() => {
     setCartItems(state.cart);
   }, [state.cart]);
@@ -58,6 +86,13 @@ export default function ShoppingCart() {
                     <Text b> Color(s): {product.item.color}</Text>
                   </Row>
                   <Row>
+                    <Text b>
+                      {" "}
+                      # of {product.item.productName} in cart:{" "}
+                      {product.orderQuant}
+                    </Text>
+                  </Row>
+                  <Row>
                     <Button
                       onClick={() => increaseQuantity(product.item, index)}
                     >
@@ -77,10 +112,10 @@ export default function ShoppingCart() {
                 </Row>
               </Card.Body>
             </Card>
-            <p># of items in cart: {product.orderQuant}</p>
           </div>
         ))
       )}
+      {displayTotal()}
     </div>
   );
 }
