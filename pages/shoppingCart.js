@@ -3,7 +3,7 @@ import { useAppContext } from "../state/AppContext";
 import { useRouter } from "next/router";
 import { Input, Spacer, Card, Button, Text, Row } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
-export default function shoppingCart() {
+export default function ShoppingCart() {
   const { state, dispatch } = useAppContext();
   console.log(state);
   return (

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Input, Spacer, Card, Button, Text, Row } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
 
-export default function productDetails({ data }) {
+export default function ProductDetails({ data }) {
   const { state, dispatch } = useAppContext();
   const [productDetails, setProductDetails] = useState(
     state.dummyData[data.id]

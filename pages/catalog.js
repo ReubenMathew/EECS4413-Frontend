@@ -11,7 +11,7 @@ export default function Catalog() {
   const router = useRouter();
   function handleItemClick(item) {
     router.push(
-      `/productDetails?id=${item.id}&productName=${item.productName}`
+      `/ProductDetails?id=${item.id}&productName=${item.productName}`
     );
   }
   function getData() {
@@ -81,7 +81,7 @@ export default function Catalog() {
           ))
         )}
       </div>
-      <button onClick={() => router.push("/checkout")}>checkout</button>
+      <button onClick={() => router.push("/Checkout")}>checkout</button>
     </div>
   );
 }
