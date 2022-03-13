@@ -23,7 +23,7 @@ export default function Catalog() {
   function handleItemClick(item) {
     //console.log(item);
     router.push(
-      `/ProductDetails?id=${item.id}&productName=${item.productName}`
+      `/productDetails?id=${item.id}&productName=${item.productName}`
     );
   }
   function getData() {
