@@ -101,7 +101,13 @@ export default function ProductDetails({ data }) {
       <div className="flex">
         <div>
           {dummyReviews.map((review, index) => (
-            <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
+            <Card
+              key={index}
+              bordered
+              shadow={false}
+              hoverable
+              css={{ mw: "400px" }}
+            >
               <Card.Body css={{ p: 0 }}>
                 <Row wrap="wrap" justify="space-between">
                   <Text b>{review.title}</Text>
