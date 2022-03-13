@@ -47,12 +47,12 @@ export default function ShoppingCart() {
         <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">
-              <Text b>Subtotal: ${Subtotal}</Text>
-              <Text b>HST: ${hst}</Text>
+              <Text b>Subtotal: ${Subtotal.toFixed(2)}</Text>
+              <Text b>HST: ${hst.toFixed(2)}</Text>
               <Row b>Shipping $4.99</Row>
               <Row>
                 {" "}
-                <Text b>Total: ${Subtotal + hst + 4.99}</Text>
+                <Text b>Total: ${(Subtotal + hst + 4.99).toFixed(2)}</Text>
               </Row>
             </Row>
           </Card.Body>

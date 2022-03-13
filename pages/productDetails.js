@@ -64,5 +64,6 @@ export async function getServerSideProps(context) {
   const { id } = context.query;
   const { productName } = context.query;
   const data = { id: id, productName: productName };
+  console.log(data);
   return { props: { data } };
 }
