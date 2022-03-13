@@ -12,11 +12,11 @@ import {
 } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
 
-export default function Registration() {
+export default function Login() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
 
-  function handleRegister() {
+  function handleLogin() {
     dispatch({
       type: "SET_LOGGED_IN",
     });
@@ -30,22 +30,16 @@ export default function Registration() {
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">
               <Row>
-                <Input placeholder="First Name" />
-              </Row>
-              <Row>
-                <Input placeholder="Last name" />
-              </Row>
-              <Row>
                 <Input placeholder="Username" />
               </Row>
               <Row>
-                <Input placeholder="Password" />
+                <Input placeholder="Username" />
               </Row>
             </Row>
           </Card.Body>
           <Card.Footer>
             <Row>
-              <Button onClick={() => handleRegister()}>Register</Button>
+              <Button onClick={() => handleLogin()}>Login</Button>
             </Row>
           </Card.Footer>
         </Card>
