@@ -11,15 +11,19 @@ import {
   Pagination,
 } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
+import { data } from "../state/dummyData";
 export default function Catalog() {
   const { state, dispatch } = useAppContext();
-  const [productName, setProductName] = useState("");
-  const [productBrand, setProductBrand] = useState("");
-  const [dummyData, setDummyData] = useState(state.dummyData);
+  const [productName, setProductName] = useState(state.searchParams.brand);
+  const [productBrand, setProductBrand] = useState(
+    state.searchParams.productName
+  );
+  const [productCategory, setProductCategory] = useState("");
+  const [catalogData, setCatalogData] = useState(state.catalogData);
   const [pageNum, setPageNum] = useState(1); //initially on page 1
   const router = useRouter();
   var itemsPerPage = 10;
-  var numOfPages = state.dummyData.length / itemsPerPage; // just for now, display 10 items per page
+  var numOfPages = state.catalogData.length / itemsPerPage; // just for now, display 10 items per page
   function handleItemClick(item) {
     //console.log(item);
     router.push(
@@ -28,7 +32,43 @@ export default function Catalog() {
   }
   function getData() {
     console.log("Get data...");
-    console.log(productName + " " + productBrand);
+    if (productName == "" && productBrand == "" && productCategory == "") {
+      //no search parameters selected, load all the data in the catalog
+      console.log("Display all data");
+      dispatch({
+        type: "SET_CATALOG_PRODUCTS",
+        data: data(),
+      });
+      const params = {
+        productName: "",
+        brand: "",
+        category: "",
+      };
+      dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+    } else {
+      //we have search parameters, so query the db with those parameters
+      console.log("Filtered data");
+      const params = {
+        productName: productName,
+        brand: productBrand,
+        category: "",
+      };
+      dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+      dispatch({
+        type: "SET_CATALOG_PRODUCTS",
+        data: [
+          {
+            id: 49,
+            productName: "Sharp Mangle (machine)",
+            category: "Sharp",
+            description: "Its a Mangle (machine).",
+            color: "Blue",
+            price: 30,
+            quantity: 20,
+          },
+        ],
+      });
+    }
   }
   function handlePageChange(e) {
     console.log("changed page");
@@ -36,8 +76,19 @@ export default function Catalog() {
     console.log(e);
   }
   useEffect(() => {
-    setDummyData(dummyData); //make sure this data is up to date after the page renders
-  }, [state.dummyData]);
+    console.log("search params updated");
+    setProductName(productName);
+    setProductBrand(productBrand);
+    setProductCategory(productCategory);
+  }, [
+    state.searchParams.productName,
+    state.searchParams.productBrand,
+    state.searchParams.productCategory,
+  ]);
+  useEffect(() => {
+    console.log("product info updated");
+    setCatalogData(state.catalogData); //make sure this data is up to date after the page renders
+  }, [state.catalogData]);
   return (
     <div cla>
       <NavBar />
@@ -65,10 +116,10 @@ export default function Catalog() {
         </div>
 
         <div className="flex flex-wrap justify-center ">
-          {dummyData == undefined ? (
+          {catalogData == undefined ? (
             <p>Loading data</p>
           ) : (
-            dummyData
+            catalogData
               .slice((pageNum - 1) * itemsPerPage, pageNum * itemsPerPage)
               .map((item, index) => (
                 <Card
