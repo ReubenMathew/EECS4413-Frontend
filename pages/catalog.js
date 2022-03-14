@@ -12,18 +12,19 @@ import {
 } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
 import { data } from "../state/dummyData";
-export default function Catalog() {
+export default function Catalog({ data }) {
   const { state, dispatch } = useAppContext();
   const [productName, setProductName] = useState(state.searchParams.brand);
   const [productBrand, setProductBrand] = useState(
     state.searchParams.productName
   );
   const [productCategory, setProductCategory] = useState("");
-  const [catalogData, setCatalogData] = useState(state.catalogData);
+  const [catalogData, setCatalogData] = useState(data);
   const [pageNum, setPageNum] = useState(1); //initially on page 1
   const router = useRouter();
   var itemsPerPage = 10;
-  var numOfPages = state.catalogData.length / itemsPerPage; // just for now, display 10 items per page
+  var numOfPages = data.length / itemsPerPage; // just for now, display 10 items per page
+
   function handleItemClick(item) {
     //console.log(item);
     router.push(
@@ -37,7 +38,7 @@ export default function Catalog() {
       console.log("Display all data");
       dispatch({
         type: "SET_CATALOG_PRODUCTS",
-        data: data(),
+        data: data,
       });
       const params = {
         productName: "",
@@ -93,6 +94,7 @@ export default function Catalog() {
     <div cla>
       <NavBar />
       <div>
+        <p>Leave filters blank to get all items</p>
         <div className="flex justify-center">
           <Spacer y={2.5} />
           <Input
@@ -164,4 +166,16 @@ export default function Catalog() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const data = await fetch(
+    "https://eecs4413-backend-production.up.railway.app/api/products",
+    { method: "GET" }
+  ).then((res) => {
+    return res.json();
+  });
+  //console.log(data);
+
+  return { props: { data } };
 }
