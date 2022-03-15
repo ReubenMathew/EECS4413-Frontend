@@ -31,7 +31,33 @@ export default function Catalog({ data }) {
       `/productDetails?id=${item.id}&productName=${item.productName}`
     );
   }
-  function getData() {
+  function testAddData() {
+    const data = fetch(
+      "https://eecs4413-backend-production.up.railway.app/api/products",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          productName: "Speakers",
+          category: "audio",
+          brand: "Bose",
+          description: "some cool speakers",
+          color: "sampleColor1",
+          price: 99.99,
+          quantity: 10,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        redirect: "follow",
+      }
+    ).then((res) => {
+      return res.json();
+    });
+    console.log("test post endpoint");
+    console.log(data);
+  }
+  async function getData() {
     console.log("Get data...");
     if (productName == "" && productBrand == "" && productCategory == "") {
       //no search parameters selected, load all the data in the catalog
@@ -47,14 +73,32 @@ export default function Catalog({ data }) {
       };
       dispatch({ type: "SET_SEARCH_PARAMS", data: params });
     } else {
-      //we have search parameters, so query the db with those parameters
-      console.log("Filtered data");
+      /*
+      Options is a string which contains the parameters needed for the request
+      */
+      const options = "";
+      for (var i = 0; i < 2; i++) {}
+      const data = await fetch(
+        "https://eecs4413-backend-production.up.railway.app/api/products",
+        { method: "GET" }
+      ).then((res) => {
+        return res.json();
+      });
+      /*
+        Save the current search params to state so that when we change
+        pages they are still there
+      */
       const params = {
         productName: productName,
         brand: productBrand,
         category: "",
       };
       dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+
+      /*
+      Save the queried catalog products to state so that they are still
+      there when we change pages.
+      */
       dispatch({
         type: "SET_CATALOG_PRODUCTS",
         data: [
@@ -95,6 +139,7 @@ export default function Catalog({ data }) {
       <NavBar />
       <div>
         <p>Leave filters blank to get all items</p>
+        <Button onClick={() => testAddData()}>Test</Button>
         <div className="flex justify-center">
           <Spacer y={2.5} />
           <Input
