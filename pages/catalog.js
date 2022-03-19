@@ -246,7 +246,7 @@ export async function getServerSideProps(context) {
   ).then((res) => {
     return res.json();
   });
-  //console.log(data);
+  console.log(data);
 
   return { props: { data } };
 }

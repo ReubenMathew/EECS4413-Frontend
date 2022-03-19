@@ -26,7 +26,7 @@ export default function Login() {
 
     var raw = JSON.stringify({
       userName: "Steve",
-      password: hashed,
+      password: "password",
     });
 
     var requestOptions = {
@@ -36,13 +36,17 @@ export default function Login() {
       redirect: "follow",
     };
 
-    fetch(
+    const token = fetch(
       "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/authenticate",
       requestOptions
-    ).then((response) => {
-      return response.json();
-    });
-
+    )
+      .then((response) => {
+        response.text();
+      })
+      .then((result) => {
+        return result;
+      });
+    console.log(token);
     // dispatch({
     //   type: "SET_LOGGED_IN",
     // });
