@@ -20,6 +20,7 @@ export default function Catalog({ data }) {
   const [productBrand, setProductBrand] = useState(state.searchParams.brand);
   const [productCategory, setProductCategory] = useState("");
   const [catalogData, setCatalogData] = useState(data);
+
   const [pageNum, setPageNum] = useState(1); //initially on page 1
   const router = useRouter();
 
@@ -44,32 +45,32 @@ export default function Catalog({ data }) {
     testAddData()
     Description: A function that tests the POST functionality
   */
-  function testAddData() {
-    const data = fetch(
-      "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products",
-      {
-        method: "POST",
+  // function testAddData() {
+  //   const data = fetch(
+  //     "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products",
+  //     {
+  //       method: "POST",
 
-        body: JSON.stringify({
-          productName: "KitchenAid HVAC",
-          category: "KitchenAid",
-          brand: "KitchenAid",
-          description: "Its a HVAC.",
-          color: "Purple",
-          price: 104,
-          quantity: 15,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-      }
-    ).then((response) => {
-      return response.json();
-    });
-    console.log("test post endpoint");
-    console.log(data);
-  }
+  //       body: JSON.stringify({
+  //         productName: "KitchenAid HVAC",
+  //         category: "KitchenAid",
+  //         brand: "KitchenAid",
+  //         description: "Its a HVAC.",
+  //         color: "Purple",
+  //         price: 104,
+  //         quantity: 15,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       redirect: "follow",
+  //     }
+  //   ).then((response) => {
+  //     return response.json();
+  //   });
+  //   console.log("test post endpoint");
+  //   console.log(data);
+  // }
 
   /*
     getData()
@@ -80,7 +81,6 @@ export default function Catalog({ data }) {
     console.log("Get data...");
     if (productName == "" && productBrand == "" && productCategory == "") {
       //no search parameters selected, load all the data in the catalog
-      //console.log("Display all data");
       dispatch({
         type: "SET_CATALOG_PRODUCTS",
         data: data,
@@ -117,18 +117,11 @@ export default function Catalog({ data }) {
       if (productName != "") {
         options = options.concat("&name=" + productName);
       }
-      // const data = axios
-      //   .get(
-      //     `https://eecs4413-backend-production.up.railway.app/api/products?${options}`
-      //   )
-      //   .then((res) => res.json());
 
       const data = await fetch(
         `https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products?${options}`,
         { method: "GET", redirect: "follow" }
       ).then((response) => response.json());
-
-      // console.log(data);
       /*
       Save the queried catalog products to state so that they are still
       there when we change pages.
@@ -139,13 +132,18 @@ export default function Catalog({ data }) {
       });
     }
   }
+  /*
+  handlePageChange(event)
+  Description: takes an event from the pagination component and sets the correct current page
+  */
   function handlePageChange(e) {
-    //console.log("changed page");
     setPageNum(e);
-    console.log(e);
   }
+
+  /*
+    This useEffect ensures that whenever search parameters are changed, they are updated properly in page
+  */
   useEffect(() => {
-    //console.log("search params updated");
     setProductName(productName);
     setProductBrand(productBrand);
     setProductCategory(productCategory);
@@ -154,8 +152,11 @@ export default function Catalog({ data }) {
     state.searchParams.productBrand,
     state.searchParams.productCategory,
   ]);
+  /*
+    This useEffect ensures that whenever catalog data changes, its updated properly in page
+  */
+
   useEffect(() => {
-    // console.log("product info updated");
     setCatalogData(state.catalogData); //make sure this data is up to date after the page renders
   }, [state.catalogData]);
 
@@ -164,7 +165,7 @@ export default function Catalog({ data }) {
       <NavBar />
       <div>
         <p>Leave filters blank to get all items</p>
-        <Button onClick={() => testAddData()}>Test</Button>
+        {/* <Button onClick={() => testAddData()}>Test</Button> */}
 
         <div className="flex justify-center">
           <Spacer y={2.5} />
@@ -246,7 +247,7 @@ export async function getServerSideProps(context) {
   ).then((res) => {
     return res.json();
   });
-  console.log(data);
+  //console.log(data);
 
   return { props: { data } };
 }
