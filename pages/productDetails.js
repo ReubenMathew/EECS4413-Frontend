@@ -147,6 +147,7 @@ export default function ProductDetails({ data }) {
 
 export async function getServerSideProps(context) {
   //add calls to the db here.
+  //specifically, use this to get the reviews of this product
   const { id } = context.query;
   const { productName } = context.query;
   const data = { id: id, productName: productName };

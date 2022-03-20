@@ -161,7 +161,7 @@ export default function Catalog({ data }) {
   }, [state.catalogData]);
 
   return (
-    <div cla>
+    <div>
       <NavBar />
       <div>
         <p>Leave filters blank to get all items</p>
