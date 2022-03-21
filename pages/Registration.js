@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "../state/AppContext";
 import { useRouter } from "next/router";
-import { hash, compare } from "bcryptjs";
 import {
   Input,
   Spacer,
@@ -15,16 +14,21 @@ import NavBar from "../components/NavBar";
 
 export default function Registration() {
   const { state, dispatch } = useAppContext();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const router = useRouter();
 
-  function handleRegister() {
+  async function handleRegister() {
+    console.log(email + " " + password + " " + username);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      email: "phones@gmail.com",
-      userName: "Steve",
-      password: "password",
+      email: email,
+      userName: username,
+      password: password,
     });
 
     var requestOptions = {
@@ -34,13 +38,13 @@ export default function Registration() {
       redirect: "follow",
     };
 
-    fetch(
-      "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/register",
+    const newUser = await fetch(
+      "https://eecs4413-backend-production.up.railway.app/api/register",
       requestOptions
     ).then((response) => {
       return response.json();
     });
-
+    console.log(newUser);
     // dispatch({
     //   type: "SET_LOGGED_IN",
     // });
@@ -54,16 +58,22 @@ export default function Registration() {
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">
               <Row>
-                <Input placeholder="First Name" />
+                <Input
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </Row>
               <Row>
-                <Input placeholder="Last name" />
+                <Input
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Row>
               <Row>
-                <Input placeholder="Username" />
-              </Row>
-              <Row>
-                <Input placeholder="Password" />
+                <Input
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Row>
             </Row>
           </Card.Body>
