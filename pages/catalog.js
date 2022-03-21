@@ -119,7 +119,7 @@ export default function Catalog({ data }) {
       }
 
       const data = await fetch(
-        `https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products?${options}`,
+        `https://eecs4413-backend-production.up.railway.app/api/products?${options}`,
         { method: "GET", redirect: "follow" }
       ).then((response) => response.json());
       /*
@@ -242,7 +242,7 @@ export default function Catalog({ data }) {
 
 export async function getServerSideProps(context) {
   const data = await fetch(
-    "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products",
+    "https://eecs4413-backend-production.up.railway.app/api/products",
     { method: "GET" }
   ).then((res) => {
     return res.json();
