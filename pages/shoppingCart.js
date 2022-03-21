@@ -15,13 +15,26 @@ export default function ShoppingCart() {
       index - the position of the item in the cart. Used when updating elements in the card
   */
   function increaseQuantity(item, index) {
+    console.log(item);
+
     console.log("increase quant");
     let tempState = [...state.cart];
     let tempElement = { ...tempState[index] };
-    tempElement.orderQuant = tempElement.orderQuant + 1;
-    tempState[index] = tempElement;
-    console.log(tempState);
-    dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
+    if (tempElement.orderQuant + 1 <= item.quantity) {
+      tempElement.orderQuant = tempElement.orderQuant + 1;
+      tempState[index] = tempElement;
+      console.log(tempState);
+      dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
+    } else {
+      alert(
+        "we only have " +
+          item.quantity +
+          " " +
+          item.productName +
+          "(s) in stock"
+      );
+      console.log("ordering more than available");
+    }
   }
   function decreaseQuantity(item, index) {
     console.log("decrease quant");

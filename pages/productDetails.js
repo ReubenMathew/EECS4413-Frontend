@@ -26,7 +26,7 @@ export default function ProductDetails({ data }) {
   }, [state.catalogData[data.index]]);
   function handleReviewPost() {
     const review = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/reviews/product/${data.id}`,
+      `https://eecs4413-backend-production.up.railway.app/api/reviews`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -47,12 +47,12 @@ export default function ProductDetails({ data }) {
     console.log(review);
 
     //console.log(reviewText + " " + reviewTitle + " " + reviewRating);
-    //actually post the review to the db. Consider doing a window.refresh afterwards to update the current list of reviews on screen
-    alert("Review Submitted!");
-    //reset the values of the review form
-    setReviewText("");
-    setReviewRating(0);
-    setReviewTitle("");
+    // //actually post the review to the db. Consider doing a window.refresh afterwards to update the current list of reviews on screen
+    // alert("Review Submitted!");
+    // //reset the values of the review form
+    // setReviewText("");
+    // setReviewRating(0);
+    // setReviewTitle("");
   }
 
   function displayReviews() {
