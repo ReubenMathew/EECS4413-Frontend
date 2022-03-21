@@ -7,6 +7,13 @@ export default function ShoppingCart() {
   const { state, dispatch } = useAppContext();
   const [cartItems, setCartItems] = useState(state.cart);
 
+  /*
+    increase/Decrease * (item,index)
+    Description: updates state when the selected property is changed. All the functions with signature increase or decrease work in the same way
+    Parameters: 
+      item - an object containing product data
+      index - the position of the item in the cart. Used when updating elements in the card
+  */
   function increaseQuantity(item, index) {
     console.log("increase quant");
     let tempState = [...state.cart];
@@ -27,18 +34,27 @@ export default function ShoppingCart() {
       dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
     }
   }
+  /*
+    deleteItem(index)
+    Description: deletes and updates the cart
+    Parameters: 
+      index - the position of the item in the cart
+  */
   function deleteItem(index) {
     let tempState = [...state.cart];
     tempState.splice(index, 1);
     dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
   }
-
+  /*
+    displayTotal()
+    Description: renders the little card below the cart. It gets the cart and computes a total before and after tax based on all the items
+    in the cart. Its then put inside a card and rendered
+  */
   function displayTotal() {
     if (state.cart.length == 0) {
       return <p>Add some Items!</p>;
     } else {
       var Subtotal = 0;
-
       state.cart.map((product, index) => {
         Subtotal = Subtotal + product.item.price * product.orderQuant;
       });
@@ -61,6 +77,9 @@ export default function ShoppingCart() {
     }
   }
 
+  /*
+    this useEffect ensures that the cart is always up to date on screen
+  */
   useEffect(() => {
     setCartItems(state.cart);
   }, [state.cart]);

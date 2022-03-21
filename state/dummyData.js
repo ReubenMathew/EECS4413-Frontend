@@ -13,9 +13,9 @@ async function getDummyData() {
   products.map((item, index) => {
     console.log(item.equipment);
     data.push({
-      id: index,
       productName: item.brand + " " + item.equipment,
       category: item.brand,
+      brand: item.brand,
       description: `Its a ${item.equipment}.`,
       color: colors[getRandomInt(colors.length)],
       price: getRandomInt(500),
@@ -24,6 +24,11 @@ async function getDummyData() {
   });
 
   console.log("products test");
-  console.log(data);
+
   return data;
 }
+
+const dummy = getDummyData();
+export const dummyData = () => {
+  return dummy;
+};

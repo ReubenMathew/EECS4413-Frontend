@@ -15,7 +15,7 @@ import NavBar from "../components/NavBar";
 export default function ProductDetails({ data }) {
   const { state, dispatch } = useAppContext();
   const [productDetails, setProductDetails] = useState(
-    state.dummyData[data.id]
+    state.catalogData[data.id]
   );
   const [reviewText, setReviewText] = useState("");
   const [reviewTitle, setReviewTitle] = useState("");
@@ -101,13 +101,7 @@ export default function ProductDetails({ data }) {
       <div className="flex">
         <div>
           {dummyReviews.map((review, index) => (
-            <Card
-              key={index}
-              bordered
-              shadow={false}
-              hoverable
-              css={{ mw: "400px" }}
-            >
+            <Card key={index} bordered shadow={false} css={{ mw: "400px" }}>
               <Card.Body css={{ p: 0 }}>
                 <Row wrap="wrap" justify="space-between">
                   <Text b>{review.title}</Text>
@@ -153,6 +147,7 @@ export default function ProductDetails({ data }) {
 
 export async function getServerSideProps(context) {
   //add calls to the db here.
+  //specifically, use this to get the reviews of this product
   const { id } = context.query;
   const { productName } = context.query;
   const data = { id: id, productName: productName };
