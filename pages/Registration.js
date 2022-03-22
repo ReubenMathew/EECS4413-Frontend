@@ -44,11 +44,26 @@ export default function Registration() {
     ).then((response) => {
       return response.json();
     });
-    console.log(newUser);
+    /*
+      Check if the new user has returned some data. In this case look for a returned email
+    */
+    if (newUser.email != undefined) {
+      console.log(newUser);
+
+      //reset the form fields
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      //bring the user to the login page to now login with their new account
+      router.push("/login");
+    } else if (newUser.error != undefined) {
+      // an error has occured, prob duplicate registration
+      console.log("User already exists!");
+    }
+
     // dispatch({
     //   type: "SET_LOGGED_IN",
     // });
-    // router.push("/catalog");
   }
   return (
     <div>

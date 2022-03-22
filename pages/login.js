@@ -42,11 +42,26 @@ export default function Login() {
       return response.json();
     });
 
-    console.log(token);
+    if (token.token != undefined) {
+      //we got a token back so the auth was sucsessful
+      dispatch({
+        type: "SET_LOGGED_IN",
+      });
+      dispatch({
+        type: "SET_TOKEN",
+        data: token.token,
+      });
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      router.push("/catalog");
+    } else {
+      alert("Incorrect Credentials!");
+    }
+    console.log(token.token);
     // dispatch({
     //   type: "SET_LOGGED_IN",
     // });
-    // router.push("/catalog");
   }
   return (
     <div>
