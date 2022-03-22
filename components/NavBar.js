@@ -8,7 +8,7 @@ export default function NavBar() {
 
   function handleLogout() {
     dispatch({ type: "SET_LOGGED_OUT" });
-    router.push("/");
+    router.push("/catalog");
   }
   function profile() {
     if (state.isLoggedIn) {

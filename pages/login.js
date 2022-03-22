@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "../state/AppContext";
 import { useRouter } from "next/router";
-import { hash, compare, genSalt } from "bcryptjs";
 import {
   Input,
   Spacer,
@@ -15,18 +14,18 @@ import NavBar from "../components/NavBar";
 
 export default function Login() {
   const { state, dispatch } = useAppContext();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   async function handleLogin() {
-    const salt = await genSalt(10);
-    const hashed = await hash("password", salt);
-
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      userName: "Steve",
-      password: "password",
+      userName: username,
+      password: password,
     });
 
     var requestOptions = {
@@ -36,21 +35,33 @@ export default function Login() {
       redirect: "follow",
     };
 
-    const token = fetch(
-      "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/authenticate",
+    const token = await fetch(
+      "https://eecs4413-backend-production.up.railway.app/api/authenticate",
       requestOptions
-    )
-      .then((response) => {
-        response.text();
-      })
-      .then((result) => {
-        return result;
+    ).then((response) => {
+      return response.json();
+    });
+
+    if (token.token != undefined) {
+      //we got a token back so the auth was sucsessful
+      dispatch({
+        type: "SET_LOGGED_IN",
       });
-    console.log(token);
+      dispatch({
+        type: "SET_TOKEN",
+        data: token.token,
+      });
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      router.push("/catalog");
+    } else {
+      alert("Incorrect Credentials!");
+    }
+    console.log(token.token);
     // dispatch({
     //   type: "SET_LOGGED_IN",
     // });
-    // router.push("/catalog");
   }
   return (
     <div>
@@ -60,10 +71,16 @@ export default function Login() {
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">
               <Row>
-                <Input placeholder="Username" />
+                <Input
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </Row>
               <Row>
-                <Input placeholder="Username" />
+                <Input
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Row>
             </Row>
           </Card.Body>

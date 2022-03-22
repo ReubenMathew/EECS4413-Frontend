@@ -38,7 +38,16 @@ export default function Catalog({ data }) {
     index - the index of the item in the response array
   */
   function handleItemClick(item, index) {
-    router.push(`/productDetails?id=${index}&productName=${item.productName}`);
+    /*Index is used to index the whole list of items, but the index returned from the click is 
+    is actually the index in the spliced list.
+    
+    eg if you are on page 1, then the index in the signature is fine
+    */
+    const realIndex = (pageNum - 1) * itemsPerPage + index;
+    console.log(realIndex);
+    router.push(
+      `/productDetails?index=${realIndex}&id=${item.id}&productName=${item.productName}`
+    );
   }
 
   /*

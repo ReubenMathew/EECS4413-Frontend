@@ -6,7 +6,7 @@ import NavBar from "../components/NavBar";
 export default function ShoppingCart() {
   const { state, dispatch } = useAppContext();
   const [cartItems, setCartItems] = useState(state.cart);
-
+  const router = useRouter();
   /*
     increase/Decrease * (item,index)
     Description: updates state when the selected property is changed. All the functions with signature increase or decrease work in the same way
@@ -15,13 +15,26 @@ export default function ShoppingCart() {
       index - the position of the item in the cart. Used when updating elements in the card
   */
   function increaseQuantity(item, index) {
+    console.log(item);
+
     console.log("increase quant");
     let tempState = [...state.cart];
     let tempElement = { ...tempState[index] };
-    tempElement.orderQuant = tempElement.orderQuant + 1;
-    tempState[index] = tempElement;
-    console.log(tempState);
-    dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
+    if (tempElement.orderQuant + 1 <= item.quantity) {
+      tempElement.orderQuant = tempElement.orderQuant + 1;
+      tempState[index] = tempElement;
+      console.log(tempState);
+      dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
+    } else {
+      alert(
+        "we only have " +
+          item.quantity +
+          " " +
+          item.productName +
+          "(s) in stock"
+      );
+      console.log("ordering more than available");
+    }
   }
   function decreaseQuantity(item, index) {
     console.log("decrease quant");
@@ -69,6 +82,11 @@ export default function ShoppingCart() {
               <Row>
                 {" "}
                 <Text b>Total: ${(Subtotal + hst + 4.99).toFixed(2)}</Text>
+              </Row>
+              <Row>
+                <Button onClick={() => router.push("/checkout")}>
+                  Checkout
+                </Button>
               </Row>
             </Row>
           </Card.Body>

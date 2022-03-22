@@ -1,10 +1,13 @@
 //import { data } from "./dummyData";
 
+import { data } from "autoprefixer";
+
 export const initialState = {
   isLoggedIn: false,
   isAdmin: false,
   email: "",
   username: "",
+  token: "",
   cart: [],
   catalogData: [],
   searchParams: { productName: "", brand: "", category: "" },
@@ -20,15 +23,19 @@ export const storageReducer = (state, action) => {
         ...state,
         isLoggedIn: true,
       };
+    case "SET_TOKEN":
+      return {
+        ...state,
+        token: action.data,
+      };
     case "SET_LOGGED_OUT":
       return {
         ...state,
         isLoggedIn: false,
         isAdmin: false,
         email: "",
+        token: "",
         username: "",
-        cart: [],
-        catalogData: [],
       };
     case "SET_IS_ADMIN":
       return {
