@@ -36,8 +36,6 @@ export const storageReducer = (state, action) => {
         email: "",
         token: "",
         username: "",
-        cart: [],
-        catalogData: [],
       };
     case "SET_IS_ADMIN":
       return {
