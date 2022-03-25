@@ -13,6 +13,8 @@ import {
 } from "@nextui-org/react";
 
 export default function AddProduct() {
+  const { state, dispatch } = useAppContext();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -39,6 +41,8 @@ export default function AddProduct() {
         }),
         headers: {
           "Content-Type": "application/json",
+          Authentication: state.token,
+          "X-CSRF-Token": state.token,
         },
         redirect: "follow",
       }
@@ -67,6 +71,7 @@ export default function AddProduct() {
               />
               <Input
                 placeholder="Quantity"
+                type="number"
                 onChange={(e) => setQuantity(e.target.valueAsNumber)}
               />
             </div>
@@ -86,6 +91,7 @@ export default function AddProduct() {
           <Row>
             <div className="space-y-2">
               <Input
+                type="number"
                 placeholder="Price"
                 onChange={(e) => setPrice(e.target.valueAsNumber)}
               />

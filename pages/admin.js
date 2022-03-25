@@ -21,6 +21,7 @@ import {
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import AddProduct from "../components/AddProduct";
+import UserCard from "../components/UserCard";
 // from https://mui.com/components/drawers/
 export default function admin() {
   const { state, dispatch } = useAppContext();
@@ -183,7 +184,7 @@ export default function admin() {
     } else if (actionState === "Manage Users") {
       return (
         <div className="flex space-x-2">
-          <p>Manage Users</p>
+          <UserCard />
         </div>
       );
     } else if (actionState === "Analytics") {
