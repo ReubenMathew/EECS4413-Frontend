@@ -19,7 +19,9 @@ import {
   Pagination,
 } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
-
+import SearchBar from "../components/SearchBar";
+import AddProduct from "../components/AddProduct";
+// from https://mui.com/components/drawers/
 export default function admin() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
@@ -48,20 +50,36 @@ export default function admin() {
       onKeyDown={() => setDrawerState(false)}
     >
       <List>
-        {["Manage Products", "Manage Users", "Analytics"].map((text, index) => (
-          <ListItem button key={text} onClick={() => setActionState(text)}>
-            <ListItemIcon>
-              <p>#</p>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {["Remove Products", "Add Products", "Manage Users", "Analytics"].map(
+          (text, index) => (
+            <ListItem button key={text} onClick={() => setActionState(text)}>
+              <ListItemIcon>
+                <p>#</p>
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          )
+        )}
       </List>
     </Box>
   );
 
   async function handleItemDelete(item, index) {
-    console.log(item);
+    let tempState = [...adminItems];
+    tempState.splice(index, 1);
+
+    const data = fetch(
+      `https://eecs4413-backend-production.up.railway.app/api/products/${item.id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((response) => {
+      return response.json();
+    });
+    setAdminItems(tempState);
+    console.log("After deletion");
+    console.log(adminItems);
+    console.log(data);
   }
   async function getData() {
     console.log("Get data...");
@@ -90,31 +108,19 @@ export default function admin() {
     setAdminItems(data);
   }
   function adminAction() {
-    if (actionState === "Manage Products") {
-      console.log("Manage Products");
+    if (actionState === "Remove Products") {
+      console.log("Remove Products");
       return (
         <div>
-          <div className="flex justify-center">
-            <Spacer y={2.5} />
-            <Input
-              clearable
-              bordered
-              labelPlaceholder="Product Name"
-              initialValue=""
-              onChange={(e) => setProductName(e.target.value)}
-              value={productName}
-            />
-            <Spacer y={2.5} />
-            <Input
-              clearable
-              bordered
-              labelPlaceholder="Brand"
-              initialValue=""
-              onChange={(e) => setProductBrand(e.target.value)}
-              value={productBrand}
-            />
-            <Button onClick={() => getData()}>Search</Button>
-          </div>
+          <SearchBar
+            name={productName}
+            brand={productBrand}
+            category={productCategory}
+            setName={setProductName}
+            setBrand={setProductBrand}
+            setCategory={setProductCategory}
+            data={getData}
+          />
 
           <div className="flex flex-wrap justify-center ">
             {adminItems == undefined ? (
@@ -129,7 +135,6 @@ export default function admin() {
                     shadow={false}
                     hoverable
                     css={{ mw: "400px" }}
-                    onClick={() => console.log(item)}
                   >
                     <Card.Body css={{ p: 0 }}>
                       <Card.Image
@@ -150,7 +155,9 @@ export default function admin() {
                           {item.quantity} Left
                         </Text>
                         <Row>
-                          <Button>Delete</Button>
+                          <Button onClick={() => handleItemDelete(item, index)}>
+                            Delete
+                          </Button>
                         </Row>
                       </Row>
                     </Card.Footer>
@@ -165,6 +172,12 @@ export default function admin() {
               initialPage={1}
             />
           </div>
+        </div>
+      );
+    } else if (actionState === "Add Products") {
+      return (
+        <div className="flex justify-center">
+          <AddProduct />
         </div>
       );
     } else if (actionState === "Manage Users") {

@@ -12,6 +12,7 @@ import {
   Pagination,
 } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
+import SearchBar from "../components/SearchBar";
 export default function Catalog({ data }) {
   const { state, dispatch } = useAppContext();
   const [productName, setProductName] = useState(
@@ -175,28 +176,15 @@ export default function Catalog({ data }) {
       <div>
         <p>Leave filters blank to get all items</p>
         {/* <Button onClick={() => testAddData()}>Test</Button> */}
-
-        <div className="flex justify-center">
-          <Spacer y={2.5} />
-          <Input
-            clearable
-            bordered
-            labelPlaceholder="Product Name"
-            initialValue=""
-            onChange={(e) => setProductName(e.target.value)}
-            value={productName}
-          />
-          <Spacer y={2.5} />
-          <Input
-            clearable
-            bordered
-            labelPlaceholder="Brand"
-            initialValue=""
-            onChange={(e) => setProductBrand(e.target.value)}
-            value={productBrand}
-          />
-          <Button onClick={() => getData()}>Search</Button>
-        </div>
+        <SearchBar
+          name={productName}
+          brand={productBrand}
+          category={productCategory}
+          setName={setProductName}
+          setBrand={setProductBrand}
+          setCategory={setProductCategory}
+          data={getData}
+        />
 
         <div className="flex flex-wrap justify-center ">
           {catalogData == undefined ? (
