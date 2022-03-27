@@ -17,7 +17,7 @@ export default function SearchBar(props) {
       <Input
         clearable
         bordered
-        labelPlaceholder="Product Name"
+        placeholder="Product Name"
         initialValue=""
         onChange={(e) => props.setName(e.target.value)}
         value={props.name}
@@ -26,9 +26,18 @@ export default function SearchBar(props) {
       <Input
         clearable
         bordered
-        labelPlaceholder="Brand"
+        placeholder="Brand"
         initialValue=""
         onChange={(e) => props.setBrand(e.target.value)}
+        value={props.brand}
+      />
+      <Spacer y={2.5} />
+      <Input
+        clearable
+        bordered
+        placeholder="Category"
+        initialValue=""
+        onChange={(e) => props.setCategory(e.target.value)}
         value={props.brand}
       />
       <Button onClick={() => props.data()}>Search</Button>

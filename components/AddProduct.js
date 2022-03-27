@@ -51,7 +51,7 @@ export default function AddProduct() {
     // console.log("test post endpoint");
     // console.log(data);
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${state.token}`);
+    myHeaders.append("Authorization", `Bearer <${state.token}>`);
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({

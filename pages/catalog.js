@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useAppContext } from "../state/AppContext";
 import { useRouter } from "next/router";
-
+import verify from "../Form_Verification/verify";
 import {
   Input,
   Spacer,
@@ -88,58 +88,70 @@ export default function Catalog({ data }) {
     If nothing was entered in the fields and you clicked enter, you would get all data in the db.
   */
   async function getData() {
-    console.log("Get data...");
-    if (productName == "" && productBrand == "" && productCategory == "") {
-      //no search parameters selected, load all the data in the catalog
-      dispatch({
-        type: "SET_CATALOG_PRODUCTS",
-        data: data,
-      });
-      const params = {
-        productName: "",
-        brand: "",
-        category: "",
-      };
-      dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+    const verifyData = [
+      { param: productName },
+      { param: productBrand },
+      { param: productCategory },
+    ];
+    const check = verify(verifyData);
+    if (check) {
+      if (productName == "" && productBrand == "" && productCategory == "") {
+        //no search parameters selected, load all the data in the catalog
+        dispatch({
+          type: "SET_CATALOG_PRODUCTS",
+          data: data,
+        });
+        const params = {
+          productName: "",
+          brand: "",
+          category: "",
+        };
+        dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+      } else {
+        /*
+          Save the current search params to state so that when we change
+          pages they are still there
+        */
+        const params = {
+          productName: productName,
+          brand: productBrand,
+          category: "",
+        };
+        dispatch({ type: "SET_SEARCH_PARAMS", data: params });
+
+        /*
+        Options is a string which contains the parameters needed for the request
+        */
+        let options = "";
+        if (productBrand != "") {
+          options = options.concat("&brand=" + productBrand);
+        }
+        if (productCategory != "") {
+          options = options.concat("&category=" + productBrand);
+          options.concat(productCategory);
+        }
+        if (productName != "") {
+          options = options.concat("&name=" + productName);
+        }
+
+        const data = await fetch(
+          `https://eecs4413-backend-production.up.railway.app/api/products?${options}`,
+          { method: "GET", redirect: "follow" }
+        ).then((response) => response.json());
+        /*
+        Save the queried catalog products to state so that they are still
+        there when we change pages.
+        */
+        dispatch({
+          type: "SET_CATALOG_PRODUCTS",
+          data: data,
+        });
+      }
     } else {
-      /*
-        Save the current search params to state so that when we change
-        pages they are still there
-      */
-      const params = {
-        productName: productName,
-        brand: productBrand,
-        category: "",
-      };
-      dispatch({ type: "SET_SEARCH_PARAMS", data: params });
-
-      /*
-      Options is a string which contains the parameters needed for the request
-      */
-      let options = "";
-      if (productBrand != "") {
-        options = options.concat("&brand=" + productBrand);
-      }
-      if (productCategory != "") {
-        options = options.concat("&category=" + productBrand);
-        options.concat(productCategory);
-      }
-      if (productName != "") {
-        options = options.concat("&name=" + productName);
-      }
-
-      const data = await fetch(
-        `https://eecs4413-backend-production.up.railway.app/api/products?${options}`,
-        { method: "GET", redirect: "follow" }
-      ).then((response) => response.json());
-      /*
-      Save the queried catalog products to state so that they are still
-      there when we change pages.
-      */
-      dispatch({
-        type: "SET_CATALOG_PRODUCTS",
-        data: data,
-      });
+      setProductBrand("");
+      setProductCategory("");
+      setProductName("");
+      alert("Nice try sql injector!");
     }
   }
   /*
