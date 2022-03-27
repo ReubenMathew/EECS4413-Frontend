@@ -23,7 +23,7 @@ import SearchBar from "../components/SearchBar";
 import AddProduct from "../components/AddProduct";
 import UserCard from "../components/UserCard";
 // from https://mui.com/components/drawers/
-export default function admin() {
+export default function Admin() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
   const [pageNum, setPageNum] = useState(1); //initially on page 1
