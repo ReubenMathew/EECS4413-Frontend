@@ -37,7 +37,7 @@ export default function Login() {
 
     //https://eecs4413-backend-production.up.railway.app/api/authenticate
     const token = await fetch(
-      "https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/authenticate",
+      "`https://eecs4413-backend-production.up.railway.app//api/authenticate",
       requestOptions
     ).then((response) => {
       return response.json();
