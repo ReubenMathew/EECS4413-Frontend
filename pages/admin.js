@@ -71,7 +71,7 @@ export default function Admin() {
     tempState.splice(index, 1);
 
     const data = fetch(
-      `https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/products/${item.id}`,
+      `https://eecs4413-backend-production.up.railway.app/api/products/${item.id}`,
       {
         method: "DELETE",
         headers: {
