@@ -25,7 +25,7 @@ export default function AddProduct() {
   const [URL, setURL] = useState(null);
   async function addItem() {
     const data = fetch(
-      "https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/products",
+      "https://eecs4413-backend-production.up.railway.app/api/products",
       {
         method: "POST",
         body: JSON.stringify({
@@ -49,35 +49,6 @@ export default function AddProduct() {
     });
     console.log("test post endpoint");
     console.log(data);
-
-    // var myHeaders = new Headers();
-    // myHeaders.append("Authorization", `Bearer <${state.token}>`);
-    // myHeaders.append("Content-Type", "application/json");
-
-    // var raw = JSON.stringify({
-    //   productName: "apples",
-    //   category: "food",
-    //   brand: "fruit",
-    //   description: "A sample description 2",
-    //   color: "sampleColor2",
-    //   price: 99.99,
-    //   quantity: 10,
-    // });
-
-    // var requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: "follow",
-    // };
-
-    // fetch(
-    //   "https://eecs4413-backend-production.up.railway.app/api/products",
-    //   requestOptions
-    // )
-    //   .then((response) => response.text())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log("error", error));
   }
   return (
     <div>
