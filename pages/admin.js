@@ -22,6 +22,7 @@ import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import AddProduct from "../components/AddProduct";
 import UserCard from "../components/UserCard";
+import FeatherIcon from "feather-icons-react";
 // from https://mui.com/components/drawers/
 export default function Admin() {
   const { state, dispatch } = useAppContext();
@@ -32,7 +33,7 @@ export default function Admin() {
   const [productBrand, setProductBrand] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [drawerState, setDrawerState] = useState(false);
-  const [actionState, setActionState] = useState("Manage Products"); //holds which action the admin wants to do, Manage products, Manage users, see analytics
+  const [actionState, setActionState] = useState("Remove Products"); //holds which action the admin wants to do, Manage products, Manage users, see analytics
 
   var itemsPerPage = 10;
   var numOfPages = Math.ceil(adminItems.length / itemsPerPage); // just for now, display 10 items per page
@@ -70,9 +71,14 @@ export default function Admin() {
     tempState.splice(index, 1);
 
     const data = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/products/${item.id}`,
+      `https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/products/${item.id}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.token}`,
+        },
+        redirect: "follow",
       }
     ).then((response) => {
       return response.json();
@@ -204,13 +210,15 @@ export default function Admin() {
   return (
     <>
       <NavBar />
-      <div>
+      <div className="flex justify-center ">
         <div>
           {["left"].map((anchor) => (
             <React.Fragment key={anchor}>
-              <Button onClick={() => setDrawerState(true)}>
-                Admin Actions
-              </Button>
+              <FeatherIcon
+                icon="menu"
+                className="h-10 w-10"
+                onClick={() => setDrawerState(true)}
+              />
               <Drawer
                 anchor={anchor}
                 open={drawerState}

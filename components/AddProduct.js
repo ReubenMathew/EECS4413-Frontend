@@ -25,28 +25,18 @@ export default function AddProduct() {
   const [URL, setURL] = useState(null);
   async function addItem() {
     const data = fetch(
-      "https://eecs4413-backend-production.up.railway.app/api/products",
+      "https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/products",
       {
         method: "POST",
-
-        // body: JSON.stringify({
-        //   productName: name,
-        //   category: category,
-        //   brand: brand,
-        //   description: description,
-        //   color: colour,
-        //   price: price,
-        //   quantity: quantity,
-        //   image_url: URL,
-        // }),
         body: JSON.stringify({
-          productName: "apples",
-          category: "food",
-          brand: "fruit",
-          description: "A sample description 2",
-          color: "sampleColor2",
-          price: 99.99,
-          quantity: 10,
+          productName: name,
+          category: category,
+          brand: brand,
+          description: description,
+          color: colour,
+          price: price,
+          quantity: quantity,
+          image_url: URL,
         }),
         headers: {
           "Content-Type": "application/json",

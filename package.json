@@ -14,7 +14,8 @@
     "@nextui-org/react": "^1.0.2-beta.3",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
-    "next": "^12.0.9",
+    "feather-icons-react": "^0.5.0",
+    "next": "^12.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "swr": "^1.2.2"
