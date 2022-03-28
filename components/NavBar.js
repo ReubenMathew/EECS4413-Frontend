@@ -41,9 +41,7 @@ export default function NavBar() {
       <div className="flex space-x-2 justify-center">
         <Button onClick={() => router.push("/catalog")}>Catalog</Button>
         <Button onClick={() => router.push("/shoppingCart")}>Cart</Button>
-        <Button onClick={() => dispatch({ type: "SET_IS_ADMIN" })}>
-          Force Admin (testing only)
-        </Button>
+
         {profile()}
       </div>
       <div>

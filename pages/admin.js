@@ -34,7 +34,7 @@ export default function Admin() {
   const [productCategory, setProductCategory] = useState("");
   const [drawerState, setDrawerState] = useState(false);
   const [actionState, setActionState] = useState("Remove Products"); //holds which action the admin wants to do, Manage products, Manage users, see analytics
-
+  const [editLock, setEdditLock] = useState(false);
   var itemsPerPage = 10;
   var numOfPages = Math.ceil(adminItems.length / itemsPerPage); // just for now, display 10 items per page
 
@@ -116,7 +116,6 @@ export default function Admin() {
   }
   function adminAction() {
     if (actionState === "Remove Products") {
-      console.log("Remove Products");
       return (
         <div>
           <SearchBar
@@ -128,7 +127,6 @@ export default function Admin() {
             setCategory={setProductCategory}
             data={getData}
           />
-
           <div className="flex flex-wrap justify-center ">
             {adminItems == undefined ? (
               <p>Loading data</p>
