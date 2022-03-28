@@ -35,15 +35,20 @@ export default function Login() {
       redirect: "follow",
     };
 
+    //https://eecs4413-backend-production.up.railway.app/api/authenticate
     const token = await fetch(
-      "https://eecs4413-backend-production.up.railway.app/api/authenticate",
+      "https://eecs4413-backend-eecs4413-backend-pr-22.up.railway.app/api/authenticate",
       requestOptions
     ).then((response) => {
       return response.json();
     });
 
     if (token.token != undefined) {
+      console.log(token);
       //we got a token back so the auth was sucsessful
+      if (token.role === "ADMIN") {
+        dispatch({ type: "SET_IS_ADMIN" });
+      }
       dispatch({
         type: "SET_LOGGED_IN",
       });
@@ -58,10 +63,6 @@ export default function Login() {
     } else {
       alert("Incorrect Credentials!");
     }
-    console.log(token.token);
-    // dispatch({
-    //   type: "SET_LOGGED_IN",
-    // });
   }
   return (
     <div>
