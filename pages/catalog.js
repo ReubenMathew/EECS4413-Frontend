@@ -52,37 +52,6 @@ export default function Catalog({ data }) {
   }
 
   /*
-    testAddData()
-    Description: A function that tests the POST functionality
-  */
-  // function testAddData() {
-  //   const data = fetch(
-  //     "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products",
-  //     {
-  //       method: "POST",
-
-  //       body: JSON.stringify({
-  //         productName: "KitchenAid HVAC",
-  //         category: "KitchenAid",
-  //         brand: "KitchenAid",
-  //         description: "Its a HVAC.",
-  //         color: "Purple",
-  //         price: 104,
-  //         quantity: 15,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       redirect: "follow",
-  //     }
-  //   ).then((response) => {
-  //     return response.json();
-  //   });
-  //   console.log("test post endpoint");
-  //   console.log(data);
-  // }
-
-  /*
     getData()
     Description: handles the search bar. It takes in the values from each input and generates query parameters.
     If nothing was entered in the fields and you clicked enter, you would get all data in the db.
@@ -186,7 +155,6 @@ export default function Catalog({ data }) {
     <div>
       <NavBar />
       <div>
-        <p>Leave filters blank to get all items</p>
         {/* <Button onClick={() => testAddData()}>Test</Button> */}
         <SearchBar
           name={productName}

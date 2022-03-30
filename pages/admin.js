@@ -23,6 +23,7 @@ import SearchBar from "../components/SearchBar";
 import AddProduct from "../components/AddProduct";
 import UserCard from "../components/UserCard";
 import FeatherIcon from "feather-icons-react";
+import Analytics from "../components/Analytics";
 // from https://mui.com/components/drawers/
 export default function Admin() {
   const { state, dispatch } = useAppContext();
@@ -195,6 +196,7 @@ export default function Admin() {
       return (
         <div className="flex space-x-2">
           <p>Analytics</p>
+          <Analytics />
         </div>
       );
     } else {
