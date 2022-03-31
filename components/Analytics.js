@@ -20,30 +20,29 @@ import {
 } from "@nextui-org/react";
 export default function Analytics() {
   const { state, dispatch } = useAppContext();
+  const [usage, setUsage] = useState("");
+  const [monthly, setMonthly] = useState({});
   const router = useRouter();
   async function getUsage() {
-    const data = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/report/website/usage`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${state.token}`,
-        },
-        redirect: "follow",
+    try {
+      const data = await fetch(
+        `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.token}`,
+          },
+          redirect: "follow",
+        }
+      ).then((response) => {
+        return response.json();
+      });
+      console.log(data);
+      if (data != undefined) {
+        console.log("set usage");
       }
-    ).then((response) => {
-      return response.json();
-    });
-    if (data != undefined) {
-      return (
-        <div>
-          <p>View Hits: {data.view} </p>
-          <p>Cart Hits: {data.cart} </p>
-          <p>Purchase Hits: {data.purchase} </p>
-        </div>
-      );
-    } else {
+    } catch (error) {
       return (
         <div>
           <p>Error!</p>
@@ -52,8 +51,8 @@ export default function Analytics() {
     }
   }
   async function getMonthlyItems() {
-    const data = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/report/monthly/items`,
+    const data = await fetch(
+      `https://eecs4413-backend-production.up.railway.app/api/analytics/monthly/items`,
       {
         method: "GET",
         headers: {
@@ -65,40 +64,47 @@ export default function Analytics() {
     ).then((response) => {
       return response.json();
     });
-    if (data != undefined) {
-      return (
-        <div>
-          <p>items</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <p>Error!</p>
-        </div>
-      );
-    }
-  }
 
-  async function displayAnalytics(type) {
-    if (type === "monthly") {
-      getMonthlyItems();
-    } else if (type === "usage") {
-      getUsage();
+    if (data != undefined) {
+      setMonthly(data);
     } else {
-      return (
-        <div>
-          <p>Choose an alalytic!</p>
-        </div>
-      );
+      console.log("ERROR!");
     }
   }
+  useEffect(() => {
+    setMonthly(monthly);
+    console.log(monthly);
+  }, [monthly]);
   return (
     <div>
-      <Button onClick={() => displayAnalytics("monthly")}>
-        Get Monthly Items sold
-      </Button>
-      <Button onClick={() => displayAnalytics("usage")}>Get Usage</Button>
+      <div>
+        <div>
+          <p>Usage: {usage}</p>
+        </div>
+        <div>
+          <p>Monthly Items sold</p>
+          {monthly == undefined ? (
+            <p>Loading</p>
+          ) : (
+            <div>
+              <p>January: {monthly.January}</p>
+              <p>Febuary: {monthly.February}</p>
+              <p>March: {monthly.March}</p>
+              <p>April: {monthly.April}</p>
+              <p>May: {monthly.May}</p>
+              <p>June: {monthly.June}</p>
+              <p>July: {monthly.July}</p>
+              <p>August: {monthly.August}</p>
+              <p>September: {monthly.September}</p>
+              <p>October: {monthly.October}</p>
+              <p>November: {monthly.November}</p>
+              <p>December: {monthly.December}</p>
+            </div>
+          )}
+        </div>
+      </div>
+      <Button onClick={() => getMonthlyItems()}>Get Monthly Items sold</Button>
+      <Button onClick={() => getUsage()}>Get Usage</Button>
     </div>
   );
 }

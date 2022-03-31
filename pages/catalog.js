@@ -194,11 +194,6 @@ export default function Catalog({ data }) {
                     <Row wrap="wrap" justify="space-between">
                       <Text b>{item.productName}</Text>
                       <Text b>${item.price}</Text>
-                      <Text
-                        css={{ color: "$accents4", fontWeight: "$semibold" }}
-                      >
-                        {item.quantity} Left
-                      </Text>
                     </Row>
                   </Card.Footer>
                 </Card>

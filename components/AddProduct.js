@@ -21,7 +21,7 @@ export default function AddProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [colour, setColour] = useState("");
-  const [quantity, setQuantity] = useState(0);
+
   const [URL, setURL] = useState(null);
   async function addItem() {
     const data = fetch(
@@ -35,7 +35,7 @@ export default function AddProduct() {
           description: description,
           color: colour,
           price: price,
-          quantity: quantity,
+
           image_url: URL,
         }),
         headers: {
@@ -66,11 +66,6 @@ export default function AddProduct() {
               <Input
                 placeholder="Product Name"
                 onChange={(e) => setName(e.target.value)}
-              />
-              <Input
-                placeholder="Quantity"
-                type="number"
-                onChange={(e) => setQuantity(e.target.valueAsNumber)}
               />
             </div>
           </Row>

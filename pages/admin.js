@@ -155,11 +155,7 @@ export default function Admin() {
                       <Row wrap="wrap" justify="space-between">
                         <Text b>{item.productName}</Text>
                         <Text b>${item.price}</Text>
-                        <Text
-                          css={{ color: "$accents4", fontWeight: "$semibold" }}
-                        >
-                          {item.quantity} Left
-                        </Text>
+
                         <Row>
                           <Button onClick={() => handleItemDelete(item, index)}>
                             Delete

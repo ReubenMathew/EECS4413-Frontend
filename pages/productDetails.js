@@ -124,9 +124,7 @@ export default function ProductDetails({ data }) {
                 <Row wrap="wrap" justify="space-between">
                   <Text b>{productDetails.productName}</Text>
                   <Text b>${productDetails.price}</Text>
-                  <Text css={{ color: "$accents4", fontWeight: "$semibold" }}>
-                    {productDetails.quantity} Left
-                  </Text>
+
                   <Row>
                     <Text b> Color(s): {productDetails.color}</Text>
                   </Row>
