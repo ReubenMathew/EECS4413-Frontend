@@ -54,6 +54,27 @@ export default function ProductDetails({ data }) {
     // setReviewRating(0);
     // setReviewTitle("");
   }
+  async function testVisit() {
+    const visit = await fetch(
+      `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.token}`,
+        },
+        redirect: "follow",
+        body: JSON.stringify({
+          visitEvent: {
+            ip_address: "1.27.0.0.0",
+            event: 1,
+          },
+        }),
+      }
+    ).then((res) => {
+      return res.json();
+    });
+  }
 
   function displayReviews() {
     if (data.reviews.length == 0) {
@@ -107,6 +128,7 @@ export default function ProductDetails({ data }) {
   return (
     <div>
       <NavBar />
+      <Button onClick={() => testVisit()}>Test Visit</Button>
       {productDetails == undefined ? (
         <p>loading product</p>
       ) : (
@@ -204,6 +226,21 @@ export async function getServerSideProps(context) {
     reviews: reviews,
   };
   console.log(data);
-  console.log(reviews);
+
+  //log that a user has visited an items page
+  const visit = await fetch(
+    `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        visitEvent: {
+          ip_address: "1.27.0.0.0",
+          event: 1,
+        },
+      }),
+    }
+  ).then((res) => {
+    return res.json();
+  });
   return { props: { data } };
 }

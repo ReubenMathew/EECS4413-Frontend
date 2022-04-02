@@ -144,3 +144,21 @@ export default function ShoppingCart() {
     </div>
   );
 }
+export async function getServerSideProps() {
+  //log that a user has visited the cart page
+  const visit = await fetch(
+    `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        visitEvent: {
+          ip_address: "1.27.0.0.0",
+          event: 2,
+        },
+      }),
+    }
+  ).then((res) => {
+    return res.json();
+  });
+  return { props: { data } };
+}

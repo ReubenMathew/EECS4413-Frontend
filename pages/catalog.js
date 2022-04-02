@@ -46,6 +46,7 @@ export default function Catalog({ data }) {
     */
     const realIndex = (pageNum - 1) * itemsPerPage + index;
     console.log(realIndex);
+
     router.push(
       `/productDetails?index=${realIndex}&id=${item.id}&productName=${item.productName}`
     );
