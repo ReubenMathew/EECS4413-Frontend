@@ -61,7 +61,6 @@ export default function ProductDetails({ data }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${state.token}`,
         },
         redirect: "follow",
         body: JSON.stringify({
