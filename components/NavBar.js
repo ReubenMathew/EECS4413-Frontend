@@ -37,10 +37,16 @@ export default function NavBar() {
     }
   }
   return (
-    <div className="flex space-x-2">
-      <Button onClick={() => router.push("/catalog")}>Catalog</Button>
-      <Button onClick={() => router.push("/shoppingCart")}>Cart</Button>
-      {profile()}
-    </div>
+    <>
+      <div className="flex space-x-2 justify-center">
+        <Button onClick={() => router.push("/catalog")}>Catalog</Button>
+        <Button onClick={() => router.push("/shoppingCart")}>Cart</Button>
+
+        {profile()}
+      </div>
+      <div>
+        <p></p>
+      </div>
+    </>
   );
 }
