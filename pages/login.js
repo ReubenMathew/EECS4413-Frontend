@@ -67,6 +67,7 @@ export default function Login() {
     <div>
       <NavBar />
       <div>
+        <h1>Log in</h1>
         <Card bordered shadow={false} css={{ mw: "300px" }}>
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">

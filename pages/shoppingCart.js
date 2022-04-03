@@ -104,7 +104,7 @@ export default function ShoppingCart() {
   return (
     <div>
       <NavBar />
-      <p>shoppingCart</p>
+      <h1>Shopping Cart</h1>
 
       {cartItems.length == 0 ? (
         <p>No items in cart</p>

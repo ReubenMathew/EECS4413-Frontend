@@ -31,7 +31,7 @@ export default function NavBar() {
       return (
         <div className="flex space-x-2">
           <Button onClick={() => router.push("/login")}>Login</Button>
-          <Button onClick={() => router.push("/registration")}>Register</Button>
+          <Button onClick={() => router.push("/Registration")}>Register</Button>
         </div>
       );
     }
