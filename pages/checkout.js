@@ -21,6 +21,7 @@ export default function Checkout() {
   const [cardCSV, setCardCSV] = useState("");
 
   async function checkout() {
+    //checking for empty fields
     if (
       username == "" ||
       shipping == "" ||
@@ -32,12 +33,13 @@ export default function Checkout() {
     ) {
       alert("Fields cannot be empty");
     } else {
-      alert("checkout pressed");
+      //sets the verify card to visible
       setActive("false");
     }
   }
 
   async function back() {
+    //sets the verify card to not visible
     setActive("true");
   }
 
