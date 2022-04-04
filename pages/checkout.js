@@ -6,35 +6,8 @@ import NavBar from "../components/NavBar";
 
 // import DatePicker from 'react-date-picker'
 
-export default function Checkout() {
+export default function Checkout({ total }) {
   const { state, dispatch } = useAppContext();
-  let cart = [...state.cart];
-  cart.map((item) => {
-    console.log(item.id);
-  });
-  const data = fetch(
-    "https://eecs4413-backend-production.up.railway.app/api/orders/process",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        total: 99.99,
-        first_name: "eric",
-        last_name: "kwok",
-        country: "canada",
-        products: {
-          1: 50,
-        },
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${state.token}`,
-      },
-      redirect: "follow",
-    }
-  ).then((response) => {
-    return response.json();
-  });
-
   const router = useRouter();
   const [active, setActive] = useState("true");
 
@@ -51,8 +24,11 @@ export default function Checkout() {
   const [cardExp, setCardExp] = useState("");
   const [cardCSV, setCardCSV] = useState("");
 
+  //processed order that gets sent when confirm is clicked
+  const [order, setOrder] = useState(undefined);
   async function checkout() {
     //checking for empty fields
+
     if (
       fname == "" ||
       lname == "" ||
@@ -66,18 +42,95 @@ export default function Checkout() {
     ) {
       alert("Fields cannot be empty");
     } else {
-      //sets the verify card to visible
-      setActive("false");
+      var product_ids = [];
+      state.cart.map((cart) => {
+        product_ids.push(cart.item.id);
+      });
+
+      var orderData = JSON.stringify({
+        total: total,
+        first_name: fname,
+        last_name: lname,
+        country: country,
+        product_ids,
+      });
+      //console.log(order);
+      const processedOrder = await fetch(
+        "https://eecs4413-backend-production.up.railway.app/api/orders/process",
+        {
+          method: "POST",
+          body: orderData,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.token}`,
+          },
+          redirect: "follow",
+        }
+      ).then((response) => {
+        return response.json();
+      });
+
+      /*do a check if the order was processed correctly. When the backend is fixed,
+      instead of checking for undefined, check the response for data.
+      */
+      if (processedOrder != undefined) {
+        setOrder(processedOrder);
+        console.log("Processing Data");
+        console.log(processedOrder);
+        //sets the verify card to visible
+        setActive("false");
+      }
+    }
+  }
+  async function confirmPayment() {
+    var product_ids = [];
+    state.cart.map((cart) => {
+      product_ids.push(cart.item.id);
+    });
+
+    //create the same body but add the order id and status from the response from the first call
+    var orderData = JSON.stringify({
+      total: total,
+      first_name: fname,
+      last_name: lname,
+      country: country,
+      product_ids,
+      id: processedOrder.id,
+      status: processedOrder.status,
+    });
+    const paidOrder = await fetch(
+      "https://eecs4413-backend-production.up.railway.app/api/orders/submit",
+      {
+        method: "PUT",
+        body: { order },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${state.token}`,
+        },
+        redirect: "follow",
+      }
+    ).then((response) => {
+      return response.json();
+    });
+    console.log("paid Order:");
+    console.log(paidOrder);
+    /*
+    Check that the response from the server is good, then clear the users cart and route them
+    back to the catalog. Not working atm bc of backend problemsS
+    */
+    if (paidOrder != undefined) {
+      dispatch({ type: "CLEAR_CART" });
+      router.push("/catalog");
     }
   }
 
   async function back() {
     //sets the verify card to not visible
     setActive("true");
-    
+
     //shipping information
     setFname("");
-    setLname
+    setLname;
     setAddress("");
     setCountry("");
 
