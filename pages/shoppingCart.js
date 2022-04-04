@@ -156,6 +156,10 @@ export async function getServerSideProps() {
           event: 2,
         },
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
     }
   ).then((res) => {
     return res.json();
