@@ -7,6 +7,7 @@ export default function ShoppingCart() {
   const { state, dispatch } = useAppContext();
   const [cartItems, setCartItems] = useState(state.cart);
   const router = useRouter();
+   
   /*
     increase/Decrease * (item,index)
     Description: updates state when the selected property is changed. All the functions with signature increase or decrease work in the same way
@@ -84,7 +85,7 @@ export default function ShoppingCart() {
                 <Text b>Total: ${(Subtotal + hst + 4.99).toFixed(2)}</Text>
               </Row>
               <Row>
-                <Button onClick={() => router.push("/checkout")}>
+                <Button onClick={() => router.push(`/checkout?total=${Subtotal}`)}>
                   Checkout
                 </Button>
               </Row>

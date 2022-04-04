@@ -3,15 +3,46 @@ import { useAppContext } from "../state/AppContext";
 import { useRouter } from "next/router";
 import { Input, Spacer, Card, Button, Text, Row } from "@nextui-org/react";
 import NavBar from "../components/NavBar";
+
 // import DatePicker from 'react-date-picker'
 
 export default function Checkout() {
+  const { state, dispatch } = useAppContext();
+  let cart = [...state.cart];
+  cart.map((item) => {
+    console.log(item.id);
+  });
+  const data = fetch(
+    "https://eecs4413-backend-production.up.railway.app/api/orders/process",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        total: 99.99,
+        first_name: "eric",
+        last_name: "kwok",
+        country: "canada",
+        products: {
+          1: 50,
+        },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state.token}`,
+      },
+      redirect: "follow",
+    }
+  ).then((response) => {
+    return response.json();
+  });
+
   const router = useRouter();
   const [active, setActive] = useState("true");
 
   //shipping information
-  const [username, setUsername] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [shipping, setAddress] = useState("");
+  const [country, setCountry] = useState("");
 
   //billing information
   const [usernameB, setBUsername] = useState("");
@@ -23,8 +54,10 @@ export default function Checkout() {
   async function checkout() {
     //checking for empty fields
     if (
-      username == "" ||
+      fname == "" ||
+      lname == "" ||
       shipping == "" ||
+      country == "" ||
       cardNum == "" ||
       cardExp == "" ||
       cardCSV == "" ||
@@ -41,6 +74,19 @@ export default function Checkout() {
   async function back() {
     //sets the verify card to not visible
     setActive("true");
+    
+    //shipping information
+    setFname("");
+    setLname
+    setAddress("");
+    setCountry("");
+
+    //billing information
+    setBUsername("");
+    setBAddress("");
+    setCardNum("");
+    setCardExp("");
+    setCardCSV("");
   }
 
   return (
@@ -64,14 +110,26 @@ export default function Checkout() {
               <Row wrap="wrap" justify="space-between">
                 <Row>
                   <Input
-                    placeholder="Full Name"
-                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="First Name"
+                    onChange={(e) => setFname(e.target.value)}
+                  />
+                </Row>
+                <Row>
+                  <Input
+                    placeholder="Last Name"
+                    onChange={(e) => setLname(e.target.value)}
                   />
                 </Row>
                 <Row>
                   <Input
                     placeholder="Shipping Address"
                     onChange={(e) => setAddress(e.target.value)}
+                  />
+                </Row>
+                <Row>
+                  <Input
+                    placeholder="Country"
+                    onChange={(e) => setCountry(e.target.value)}
                   />
                 </Row>
               </Row>
@@ -130,10 +188,14 @@ export default function Checkout() {
               </center>
               <p>
                 <b>Full Name: </b>
-                {username}
+                {fname} {lname}
                 <p />
                 <b>Shipping Address: </b>
                 {shipping}
+                <p />
+                <p />
+                <b>Country: </b>
+                {country}
                 <p />
               </p>
               <h3>
@@ -169,4 +231,9 @@ export default function Checkout() {
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { total } = context.query;
+  return { props: { total } };
 }
