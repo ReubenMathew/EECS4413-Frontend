@@ -206,6 +206,7 @@ export default function Admin() {
     }
   }
   return (
+
     <>
       <NavBar />
       <div className="flex justify-center ">
@@ -230,5 +231,6 @@ export default function Admin() {
         {adminAction()}
       </div>
     </>
+
   );
 }
