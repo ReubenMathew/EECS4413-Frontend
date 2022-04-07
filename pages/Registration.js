@@ -69,6 +69,7 @@ export default function Registration() {
     <div>
       <NavBar />
       <div>
+        <h1>Register</h1>
         <Card bordered shadow={false} css={{ mw: "300px" }}>
           <Card.Body css={{ p: 0 }}>
             <Row wrap="wrap" justify="space-between">
