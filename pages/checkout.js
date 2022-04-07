@@ -56,11 +56,12 @@ export default function Checkout({ total }) {
       });
       //console.log(order);
       const processedOrder = await fetch(
-        "https://eecs4413-backend-production.up.railway.app/api/orders/process",
+        "https://shopcart-backend.fly.dev/api/orders/process",
         {
           method: "POST",
           body: orderData,
           headers: {
+            Authorization: `Bearer ${state.token}`,
             "Content-Type": "application/json",
           },
           redirect: "follow",
@@ -98,7 +99,7 @@ export default function Checkout({ total }) {
       status: processedOrder.status,
     });
     const paidOrder = await fetch(
-      "https://eecs4413-backend-production.up.railway.app/api/orders/submit",
+      "https://shopcart-backend.fly.dev/api/orders/submit",
       {
         method: "PUT",
         body: { order },

@@ -135,7 +135,7 @@ export default function Catalog({ data }) {
         }
 
         const data = await fetch(
-          `https://eecs4413-backend-production.up.railway.app/api/products?${options}`,
+          `https://shopcart-backend.fly.dev/api/products?${options}`,
           { method: "GET", redirect: "follow" }
         ).then((response) => response.json());
         /*
@@ -250,10 +250,9 @@ export default function Catalog({ data }) {
 }
 
 export async function getServerSideProps(context) {
-  const data = await fetch(
-    "https://eecs4413-backend-production.up.railway.app/api/products",
-    { method: "GET" }
-  ).then((res) => {
+  const data = await fetch("https://shopcart-backend.fly.dev/api/products", {
+    method: "GET",
+  }).then((res) => {
     return res.json();
   });
   //console.log(data);

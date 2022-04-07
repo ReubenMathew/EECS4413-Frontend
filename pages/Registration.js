@@ -39,7 +39,7 @@ export default function Registration() {
     };
 
     const newUser = await fetch(
-      "https://eecs4413-backend-production.up.railway.app/api/register",
+      "https://shopcart-backend.fly.dev/api/register",
       requestOptions
     ).then((response) => {
       return response.json();
