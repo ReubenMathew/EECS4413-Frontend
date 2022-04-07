@@ -53,6 +53,7 @@ export default function ShoppingCart() {
     Description: renders the little card below the cart. It gets the cart and computes a total before and after tax based on all the items
     in the cart. Its then put inside a card and rendered
   */
+
   function displayTotal() {
     if (state.cart.length == 0) {
       return <p>Add some Items!</p>;
@@ -143,26 +144,4 @@ export default function ShoppingCart() {
       {displayTotal()}
     </div>
   );
-}
-export async function getServerSideProps() {
-  //log that a user has visited the cart page
-  const visit = await fetch(
-    `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        visitEvent: {
-          ip_address: "1.27.0.0.0",
-          event: 2,
-        },
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-    }
-  ).then((res) => {
-    return res.json();
-  });
-  return { props: { data } };
 }

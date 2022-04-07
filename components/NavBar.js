@@ -10,6 +10,24 @@ export default function NavBar() {
     dispatch({ type: "SET_LOGGED_OUT" });
     router.push("/catalog");
   }
+
+  async function handleCart() {
+    const visit = await fetch(
+      `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          ip_address: "1.27.0.0.0",
+          event: 2,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      }
+    );
+    router.push("/shoppingCart");
+  }
   function profile() {
     if (state.isLoggedIn) {
       if (state.isAdmin) {
@@ -40,7 +58,7 @@ export default function NavBar() {
     <>
       <div className="flex space-x-2 justify-center">
         <Button onClick={() => router.push("/catalog")}>Catalog</Button>
-        <Button onClick={() => router.push("/shoppingCart")}>Cart</Button>
+        <Button onClick={() => handleCart()}>Cart</Button>
 
         {profile()}
       </div>

@@ -39,8 +39,16 @@ export default function Analytics() {
         return response.json();
       });
       console.log(data);
-      if (data != undefined) {
+      if (data.cart != undefined) {
         console.log("set usage");
+        const usageString =
+          "Cart Hits: " +
+          data.cart +
+          " Purchase Hits:" +
+          data.purchase +
+          " CatalogViews" +
+          data.view;
+        setUsage(usageString);
       }
     } catch (error) {
       return (
