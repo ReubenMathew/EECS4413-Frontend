@@ -62,12 +62,11 @@ export default function Checkout({ total }) {
           body: orderData,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${state.token}`,
           },
           redirect: "follow",
         }
       ).then((response) => {
-        return response.json();
+        return response.text();
       });
 
       /*do a check if the order was processed correctly. When the backend is fixed,
