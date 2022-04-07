@@ -33,7 +33,7 @@ export default function AddProduct() {
         description: description,
         color: colour,
         price: price,
-        quantity: quantity,
+
         image_url: URL,
       }),
       headers: {

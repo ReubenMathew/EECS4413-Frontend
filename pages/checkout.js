@@ -67,13 +67,13 @@ export default function Checkout({ total }) {
           redirect: "follow",
         }
       ).then((response) => {
-        return response.text();
+        return response.json();
       });
 
       /*do a check if the order was processed correctly. When the backend is fixed,
       instead of checking for undefined, check the response for data.
       */
-      if (processedOrder != undefined) {
+      if (processedOrder.id != undefined) {
         setOrder(processedOrder);
         console.log("Processing Data");
         console.log(processedOrder);
@@ -95,14 +95,15 @@ export default function Checkout({ total }) {
       last_name: lname,
       country: country,
       product_ids,
-      id: processedOrder.id,
-      status: processedOrder.status,
+      id: order.id,
+      status: order.status,
     });
+    console.log(orderData);
     const paidOrder = await fetch(
       "https://shopcart-backend.fly.dev/api/orders/submit",
       {
         method: "PUT",
-        body: { order },
+        body: orderData,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${state.token}`,
@@ -113,14 +114,17 @@ export default function Checkout({ total }) {
       return response.json();
     });
     console.log("paid Order:");
-    console.log(paidOrder);
-    /*
-    Check that the response from the server is good, then clear the users cart and route them
-    back to the catalog. Not working atm bc of backend problemsS
-    */
-    if (paidOrder != undefined) {
+    console.log(paidOrder.Order);
+    // /*
+    // Check that the response from the server is good, then clear the users cart and route them
+    // back to the catalog. Not working atm bc of backend problemsS
+    // */
+    if (paidOrder.Order === "Order Successfully Completed") {
+      alert("Order Successfully Completed!");
       dispatch({ type: "CLEAR_CART" });
       router.push("/catalog");
+    } else {
+      alert(paidOrder.Order);
     }
   }
 
@@ -130,7 +134,7 @@ export default function Checkout({ total }) {
 
     //shipping information
     setFname("");
-    setLname;
+    setLname("");
     setAddress("");
     setCountry("");
 
@@ -273,7 +277,7 @@ export default function Checkout({ total }) {
             <Card.Footer>
               <Row>
                 <div>
-                  <Button>Confirm</Button>
+                  <Button onClick={() => confirmPayment()}>Confirm</Button>
                   <br />
                   <Button onClick={() => back()}>Back</Button>
                 </div>
