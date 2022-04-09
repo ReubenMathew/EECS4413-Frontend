@@ -72,7 +72,7 @@ export default function Admin() {
     tempState.splice(index, 1);
 
     const data = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/products/${item.id}`,
+      `https://shopcart-backend.fly.dev/api/products/${item.id}`,
       {
         method: "DELETE",
         headers: {
@@ -108,7 +108,7 @@ export default function Admin() {
     }
 
     const data = await fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/products?${options}`,
+      `https://shopcart-backend.fly.dev/api/products?${options}`,
       { method: "GET", redirect: "follow" }
     ).then((response) => response.json());
 
@@ -204,7 +204,6 @@ export default function Admin() {
     }
   }
   return (
-
     <>
       <NavBar />
       <div className="flex justify-center ">
@@ -229,6 +228,5 @@ export default function Admin() {
         {adminAction()}
       </div>
     </>
-
   );
 }

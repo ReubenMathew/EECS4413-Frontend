@@ -24,27 +24,26 @@ export default function AddProduct() {
 
   const [URL, setURL] = useState(null);
   async function addItem() {
-    const data = fetch(
-      "https://eecs4413-backend-production.up.railway.app/api/products",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          productName: name,
-          category: category,
-          brand: brand,
-          description: description,
-          color: colour,
-          price: price,
 
-          image_url: URL,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${state.token}`,
-        },
-        redirect: "follow",
-      }
-    ).then((response) => {
+    const data = fetch("https://shopcart-backend.fly.dev/api/products", {
+      method: "POST",
+      body: JSON.stringify({
+        productName: name,
+        category: category,
+        brand: brand,
+        description: description,
+        color: colour,
+        price: price,
+
+        image_url: URL,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state.token}`,
+      },
+      redirect: "follow",
+    }).then((response) => {
+
       return response.json();
     });
     console.log("test post endpoint");

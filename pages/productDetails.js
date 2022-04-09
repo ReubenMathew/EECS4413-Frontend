@@ -25,22 +25,19 @@ export default function ProductDetails({ data }) {
     setProductDetails(state.catalogData[data.index]);
   }, [state.catalogData[data.index]]);
   function handleReviewPost() {
-    const review = fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/reviews`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          title: reviewTitle,
-          description: reviewText,
-          rating: reviewRating,
-          product_id: data.id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-      }
-    ).then((response) => {
+    const review = fetch(`https://shopcart-backend.fly.dev/api/reviews`, {
+      method: "POST",
+      body: JSON.stringify({
+        title: reviewTitle,
+        description: reviewText,
+        rating: reviewRating,
+        product_id: data.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    }).then((response) => {
       return response.json();
     });
     console.log("test post review endpoint");
@@ -212,7 +209,7 @@ export async function getServerSideProps(context) {
   const { productName } = context.query;
 
   const reviews = await fetch(
-    `https://eecs4413-backend-production.up.railway.app/api/reviews/product/${id}`,
+    `https://shopcart-backend.fly.dev/api/reviews/product/${id}`,
     { method: "GET" }
   ).then((res) => {
     return res.json();
