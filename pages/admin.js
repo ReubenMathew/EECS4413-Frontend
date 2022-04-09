@@ -23,6 +23,7 @@ import SearchBar from "../components/SearchBar";
 import AddProduct from "../components/AddProduct";
 import UserCard from "../components/UserCard";
 import FeatherIcon from "feather-icons-react";
+import Analytics from "../components/Analytics";
 // from https://mui.com/components/drawers/
 export default function Admin() {
   const { state, dispatch } = useAppContext();
@@ -154,11 +155,7 @@ export default function Admin() {
                       <Row wrap="wrap" justify="space-between">
                         <Text b>{item.productName}</Text>
                         <Text b>${item.price}</Text>
-                        <Text
-                          css={{ color: "$accents4", fontWeight: "$semibold" }}
-                        >
-                          {item.quantity} Left
-                        </Text>
+
                         <Row>
                           <Button onClick={() => handleItemDelete(item, index)}>
                             Delete
@@ -195,6 +192,7 @@ export default function Admin() {
       return (
         <div className="flex space-x-2">
           <p>Analytics</p>
+          <Analytics />
         </div>
       );
     } else {

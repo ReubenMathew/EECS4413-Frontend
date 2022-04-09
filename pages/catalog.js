@@ -46,41 +46,11 @@ export default function Catalog({ data }) {
     */
     const realIndex = (pageNum - 1) * itemsPerPage + index;
     console.log(realIndex);
+
     router.push(
       `/productDetails?index=${realIndex}&id=${item.id}&productName=${item.productName}`
     );
   }
-
-  /*
-    testAddData()
-    Description: A function that tests the POST functionality
-  */
-  // function testAddData() {
-  //   const data = fetch(
-  //     "https://eecs4413-backend-eecs4413-backend-pr-19.up.railway.app/api/products",
-  //     {
-  //       method: "POST",
-
-  //       body: JSON.stringify({
-  //         productName: "KitchenAid HVAC",
-  //         category: "KitchenAid",
-  //         brand: "KitchenAid",
-  //         description: "Its a HVAC.",
-  //         color: "Purple",
-  //         price: 104,
-  //         quantity: 15,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       redirect: "follow",
-  //     }
-  //   ).then((response) => {
-  //     return response.json();
-  //   });
-  //   console.log("test post endpoint");
-  //   console.log(data);
-  // }
 
   /*
     getData()
@@ -186,7 +156,6 @@ export default function Catalog({ data }) {
     <div>
       <NavBar />
       <div>
-        <p>Leave filters blank to get all items</p>
         {/* <Button onClick={() => testAddData()}>Test</Button> */}
         <SearchBar
           name={productName}
@@ -226,11 +195,6 @@ export default function Catalog({ data }) {
                     <Row wrap="wrap" justify="space-between">
                       <Text b>{item.productName}</Text>
                       <Text b>${item.price}</Text>
-                      <Text
-                        css={{ color: "$accents4", fontWeight: "$semibold" }}
-                      >
-                        {item.quantity} Left
-                      </Text>
                     </Row>
                   </Card.Footer>
                 </Card>
@@ -257,5 +221,20 @@ export async function getServerSideProps(context) {
   });
   //console.log(data);
 
+  //whenever someone visits this page, log it
+  const visit = await fetch(
+    `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        ip_address: "1.27.0.0.0",
+        event: 1,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    }
+  );
   return { props: { data } };
 }

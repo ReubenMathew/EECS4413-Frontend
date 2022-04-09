@@ -21,21 +21,11 @@ export default function ShoppingCart() {
     console.log("increase quant");
     let tempState = [...state.cart];
     let tempElement = { ...tempState[index] };
-    if (tempElement.orderQuant + 1 <= item.quantity) {
-      tempElement.orderQuant = tempElement.orderQuant + 1;
-      tempState[index] = tempElement;
-      console.log(tempState);
-      dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
-    } else {
-      alert(
-        "we only have " +
-          item.quantity +
-          " " +
-          item.productName +
-          "(s) in stock"
-      );
-      console.log("ordering more than available");
-    }
+
+    tempElement.orderQuant = tempElement.orderQuant + 1;
+    tempState[index] = tempElement;
+    console.log(tempState);
+    dispatch({ type: "CART_QUANT_CHANGE", data: tempState });
   }
   function decreaseQuantity(item, index) {
     console.log("decrease quant");
@@ -64,6 +54,7 @@ export default function ShoppingCart() {
     Description: renders the little card below the cart. It gets the cart and computes a total before and after tax based on all the items
     in the cart. Its then put inside a card and rendered
   */
+
   function displayTotal() {
     if (state.cart.length == 0) {
       return <p>Add some Items!</p>;
@@ -120,9 +111,7 @@ export default function ShoppingCart() {
                 <Row wrap="wrap" justify="space-between">
                   <Text b>{product.item.productName}</Text>
                   <Text b>${product.item.price}</Text>
-                  <Text css={{ color: "$accents4", fontWeight: "$semibold" }}>
-                    {product.item.quantity} Left
-                  </Text>
+
                   <Row>
                     <Text b> Color(s): {product.item.color}</Text>
                   </Row>

@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 export default function SearchBar(props) {
   return (
     <div className="flex justify-center">
+      <p>Leave filters blank to get all items</p>
+
       <Spacer y={2.5} />
       <Input
         clearable
