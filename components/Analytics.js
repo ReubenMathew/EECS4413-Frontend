@@ -26,7 +26,7 @@ export default function Analytics() {
   async function getUsage() {
     try {
       const data = await fetch(
-        `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+        `https://shopcart-backend.fly.dev/api/analytics/website/usage`,
         {
           method: "GET",
           headers: {
@@ -60,7 +60,7 @@ export default function Analytics() {
   }
   async function getMonthlyItems() {
     const data = await fetch(
-      `https://eecs4413-backend-production.up.railway.app/api/analytics/monthly/items`,
+      `https://shopcart-backend.fly.dev/api/analytics/monthly/items`,
       {
         method: "GET",
         headers: {
