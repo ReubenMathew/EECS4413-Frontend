@@ -79,6 +79,8 @@ export default function Checkout({ total }) {
         console.log(processedOrder);
         //sets the verify card to visible
         setActive("false");
+      } else {
+        alert(processedOrder.Order);
       }
     }
   }
@@ -290,11 +292,10 @@ export default function Checkout({ total }) {
   );
 }
 
-
 export async function getServerSideProps() {
   //log that a user has visited the checkout page
   const visit = await fetch(
-    `https://eecs4413-backend-production.up.railway.app/api/analytics/website/usage`,
+    `https://shopcart-backend.fly.dev/api/analytics/website/usage`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -308,5 +309,4 @@ export async function getServerSideProps() {
     }
   );
   return { props: { data: "cartVisit" } };
-
 }
