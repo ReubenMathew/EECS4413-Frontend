@@ -149,6 +149,7 @@ export default function ProductDetails({ data }) {
             </Card>
           </div>
           <h1>Reviews</h1>
+          <p>refresh page to see your review!</p>
           <div className="flex">
             <div>{displayReviews()}</div>
             <div>
