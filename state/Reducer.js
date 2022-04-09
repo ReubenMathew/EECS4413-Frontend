@@ -73,6 +73,11 @@ export const storageReducer = (state, action) => {
         ...state,
         cart: state.cart.concat(action.data),
       };
+    case "CLEAR_CART":
+      return {
+        ...state,
+        cart: [],
+      };
     case "CART_QUANT_CHANGE":
       return {
         ...state,
