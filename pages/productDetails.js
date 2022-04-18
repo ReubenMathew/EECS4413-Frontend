@@ -122,6 +122,8 @@ export default function ProductDetails({ data }) {
                 <Row wrap="wrap" justify="space-between">
                   <Text b>{productDetails.productName}</Text>
                   <Text b>${productDetails.price}</Text>
+                  <Text b>Category: {productDetails.category}</Text>
+                  <Text b>Brand: {productDetails.brand}</Text>
 
                   <Row>
                     <Text b> Color(s): {productDetails.color}</Text>
