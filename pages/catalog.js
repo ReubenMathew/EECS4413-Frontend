@@ -97,12 +97,13 @@ export default function Catalog({ data }) {
           options = options.concat("&brand=" + productBrand);
         }
         if (productCategory != "") {
-          options = options.concat("&category=" + productBrand);
+          options = options.concat("&category=" + productCategory);
           options.concat(productCategory);
         }
         if (productName != "") {
-          options = options.concat("&name=" + productCategory);
+          options = options.concat("&name=" + productName);
         }
+        console.log(options);
 
         const data = await fetch(
           `https://shopcart-backend.fly.dev/api/products?${options}`,
