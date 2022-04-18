@@ -19,7 +19,9 @@ export default function Catalog({ data }) {
     state.searchParams.productName
   );
   const [productBrand, setProductBrand] = useState(state.searchParams.brand);
-  const [productCategory, setProductCategory] = useState("");
+  const [productCategory, setProductCategory] = useState(
+    state.searchParams.category
+  );
   const [catalogData, setCatalogData] = useState(data);
 
   const [pageNum, setPageNum] = useState(1); //initially on page 1
@@ -98,10 +100,9 @@ export default function Catalog({ data }) {
         }
         if (productCategory != "") {
           options = options.concat("&category=" + productCategory);
-          options.concat(productCategory);
         }
         if (productName != "") {
-          options = options.concat("&name=" + productCategory);
+          options = options.concat("&name=" + productName);
         }
         console.log(options);
 
