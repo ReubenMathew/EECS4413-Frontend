@@ -101,7 +101,7 @@ export default function Catalog({ data }) {
           options.concat(productCategory);
         }
         if (productName != "") {
-          options = options.concat("&name=" + productName);
+          options = options.concat("&name=" + productCategory);
         }
 
         const data = await fetch(
