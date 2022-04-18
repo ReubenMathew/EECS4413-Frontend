@@ -40,7 +40,7 @@ export default function SearchBar(props) {
         placeholder="Category"
         initialValue=""
         onChange={(e) => props.setCategory(e.target.value)}
-        value={props.brand}
+        value={props.category}
       />
       <Button onClick={() => props.data()}>Search</Button>
     </div>
