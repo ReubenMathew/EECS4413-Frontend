@@ -14,6 +14,15 @@ next dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Its reccommended that you use the production link and not run it locally.
+
+## Catalog Page
+The catalog page is where users can filter the catalog by name, catagory and brand. Fill out the fields to retrieve products or leave them blank and get all products in the system.
+
+Clicking on an item in the catalog brings you to the details page. There you can write reviews and add the product to your cart. When you make a review and click post, refresh the page to see it added to the list.
+
+## Cart
+Using the cart is simple enough. Dont worry about the number of items in your order because its unlimited. Clicking checkout brings you to the checkout page
 
 
 ## Some General Notes
