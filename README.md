@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## Some General Notes
-- To login as an admin use the username: jim and password: test
+- To login as an admin use the username: "admin" and password: "password"
 - If you revisit the app after some time and features start to not work, logout and relog.
 - When posting reviews refresh the page once you click send to see the review
 - Searching the catalog with empty fields gets all products
